@@ -23,13 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = 'django-insecure-e&v)6h&m+h@yu6ubrh$-l&ty(&ykhqa)o)xyr9x_ms9=&5b+95'
 SECRET_KEY = os.getenv(key='SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+#SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
 DEBUG = bool(os.getenv(key='DEBUG'))
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -84,7 +84,7 @@ DATABASES = {
        "ENGINE": "django.db.backends.postgresql",
        "NAME": "django",
        "USER": "django",
-       "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+       "PASSWORD": os.getenv("POSTGRES_PASSWORD","django"),
        "HOST": "localhost",
        "PORT": 5432,
    }
