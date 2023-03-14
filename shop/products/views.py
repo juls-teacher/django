@@ -12,28 +12,28 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    # if request.GET.get("param"):
-    #     logger.info(f' My custom var= {settings.MY_CUSTOM_VARIABLE}')
-    #     logger.info(f' My env var= {settings.MY_ENV_VARIABLE}')
-    #     logger.info(f' My param = {request.GET.get("param")}')
-    #
-    # if int(os.getenv(key='FIRST_PARAM')) :
-    #     logger.info(f'second variable  {os.getenv(key="SECOND_PARAM")}')
-    # else:
-    #     logger.info(f'third variable {os.getenv(key="THIRD_PARAM")}')
-    # return HttpResponse("Shop index view")
+    if request.GET.get("param"):
+        logger.info(f' My custom var= {settings.MY_CUSTOM_VARIABLE}')
+        logger.info(f' My env var= {settings.MY_ENV_VARIABLE}')
+        logger.info(f' My param = {request.GET.get("param")}')
+
+    if int(os.getenv(key='FIRST_PARAM')) :
+        logger.info(f'second variable  {os.getenv(key="SECOND_PARAM")}')
+    else:
+        logger.info(f'third variable {os.getenv(key="THIRD_PARAM")}')
+    return HttpResponse("Shop index view")
 
     products1 = Product.objects.all()
     title = request.GET.get("title")
-    # if title is not None:
-    #     products1 = products1.filter(title__icontains = title)
-    #
-    # purchases__count= request.GET.get("purchases__count")
-    # if purchases__count is not None:
-    #     products1 = products1.filter(purchases__count=purchases__count)
-    #
-    # string = "<br>".join([str(p) for p in products1])
-    # return HttpResponse(string)
+    if title is not None:
+        products1 = products1.filter(title__icontains = title)
+
+    purchases__count= request.GET.get("purchases__count")
+    if purchases__count is not None:
+        products1 = products1.filter(purchases__count=purchases__count)
+
+    string = "<br>".join([str(p) for p in products1])
+    return HttpResponse(string)
 
 # Добавить сортировку товаров через GET параметр по цене, продажам (по общей стоимости продаж)
 # и популярности (по количеству проданных).
@@ -50,6 +50,11 @@ def index(request):
         return HttpResponse(f'popular sale <br> {string}')
 
 
+
+    if request.GET.get("sort") == 'purchased_money':
+        products1 = products1.annotate(purchased_money=Sum(F('price')*F('purchases__count'))).order_by('-purchased_money')
+        string = '<br>'.join([f'Product - {data.title}. Earned - {data.purchased_money}' for data in products1])
+        return HttpResponse(f'Products sorted by earned money <br> {string}')
 
 
 

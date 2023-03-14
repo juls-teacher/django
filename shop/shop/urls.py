@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 from products.views import index, products
-from profiles.views import profiles
+from profiles.views import profiles, register
 
 urlpatterns = [
    path('admin/', admin.site.urls),
    path('profiles/', profiles, name='profiles'),
    path('products/', products, name='products'),
    path('', index, name='index'),
+   path('register/',register,name='register'),
 
 
 
