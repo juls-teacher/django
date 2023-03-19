@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from products.views import index, products
+from products.views import index, products,add_product
 from profiles.views import profiles, register
 
 urlpatterns = [
@@ -25,6 +25,8 @@ urlpatterns = [
    path('products/', products, name='products'),
    path('', index, name='index'),
    path('register/',register,name='register'),
+   path('add_product/',add_product,name='add_product'),
+
 
 
 

@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.conf import settings
 from datetime import timedelta
 from django.utils import timezone
+from django.shortcuts import render, redirect
+from products.forms import AddProductForm
 
 from products.models import Product
 
@@ -35,8 +37,6 @@ def index(request):
     string = "<br>".join([str(p) for p in products1])
     return HttpResponse(string)
 
-# Добавить сортировку товаров через GET параметр по цене, продажам (по общей стоимости продаж)
-# и популярности (по количеству проданных).
 
     if request.GET.get("sort") == 'price':
         products1 = products1.order_by('price')
@@ -70,3 +70,15 @@ def products(request):
         prod_for_view += get_data
     return HttpResponse(prod_for_view)
 
+def add_product(request):
+    if request.method == "POST":
+        form = AddProductForm(request.POST)
+        if form.is_valid():
+            Product.objects.create(title=form.cleaned_data["title"],
+                                   price=form.cleaned_data["price"],
+                                   color=form.cleaned_data["color"],
+                                   description=form.cleaned_data["description"])
+            return redirect("/")
+    else:
+        form = AddProductForm()
+    return render(request,'add_product.html', {"form": form})
