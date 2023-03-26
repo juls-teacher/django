@@ -1,15 +1,16 @@
 from django.db import models
 from django.conf import settings
 
-
 COLOR_CHOICES=(
     ("RED","Red"),
     ("GREEN","Green"),
     ("BLUE","Blue"),
+    ("BLACK","Black"),
 )
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
     color = models.CharField(max_length=32,choices=COLOR_CHOICES,default = "RED")
     price = models.IntegerField(default=0)
     excerpt = models.TextField(blank=True, null=True)

@@ -78,7 +78,7 @@ def add_product(request):
                                    price=form.cleaned_data["price"],
                                    color=form.cleaned_data["color"],
                                    description=form.cleaned_data["description"])
-            return redirect("/")
+            return redirect("index")
     else:
         form = AddProductForm()
     return render(request,'add_product.html', {"form": form})

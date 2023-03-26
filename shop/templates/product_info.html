@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <div class="container">
+        <h1>Product details</h1>
+        <div class="row">
+
+            <div class="col-4">
+                {% if get_all_products.image %}
+                    <img src="{{ get_all_products.image.url }}" width="400" height="300"/>
+                {% else %}
+                    <img src="/media/products/no_image.webp" width="400" height="300"/>
+                {% endif %}
+            </div>
+            <div class="col-8">
+            <div class="text">
+                <p>Title - {{ get_all_products }}</p>
+                <p>Price - {{ get_all_products.price }}</p>
+                <p>Description - {{ get_all_products.description }}</p>
+                <p>Color - {{ get_all_products.color }}</p>
+            </div>
+            </div>
+
+</div>
+    <div class="row">
+    <h3>Consumers</h3>
+        {% for consumer in consumers %}
+            <p>{{ consumer.user.username }}</p>
+        {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}
