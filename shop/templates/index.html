@@ -1,24 +1,21 @@
+
 {% extends "base.html" %}
-{% load crispy_forms_filters %}
+
+{% block title %}Products{% endblock %}
+
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <div class="container">
-
-        <div class="col-5">
-            <h1>Products</h1>
-            {% for prod in products1 %}
-
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text"> {{ prod }}<br>Price - {{ prod.price }}</p>
-                        {% if prod.image %}
-                        <img src="{{ prod.image.url }}" width="180" height="150"/>
-                        {% endif %}
-                    </div>
-                </div>
-
-            {% endfor %}
-        </div>
+<div class="container">
+  <h1>Products</h1>
+  <div class="row mb-3">
+  {% for product in products1 %}
+    {% if forloop.counter0|divisibleby:4 %}
+      </div><div class="row mb-4">
+    {% endif %}
+    <div class="col-3">
+      {% include "product.html" %}
     </div>
+  {% endfor %}
+  </div>
+</div>
+
 {% endblock %}

@@ -3,7 +3,6 @@ from profiles.models import Profile
 
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=255)
     first_name = forms.CharField(max_length=255)
     last_name = forms.CharField(max_length=255)
     email = forms.EmailField()

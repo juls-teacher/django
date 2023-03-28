@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-e&v)6h&m+h@yu6ubrh$-l&ty(&ykhqa)o)xyr9x_ms9=&5b+95'
-SECRET_KEY = os.getenv(key='SECRET_KEY')
-
+# SECRET_KEY = os.getenv(key='SECRET_KEY')
+SECRET_KEY = 'my-secret-key'
 #SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
@@ -137,7 +137,7 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [BASE_DIR/"static"]
 
-# STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = None
 STATIC_URL = "static/"
 
 MEDIA_ROOT = BASE_DIR / "media"

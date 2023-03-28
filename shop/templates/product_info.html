@@ -4,8 +4,7 @@
     <div class="container">
 
         <h1>Product details</h1>
-        <div class="row">
-
+        <div class="row mb-3">
             <div class="col-4">
                 {% if products1%}
                     <img src="{{products1.image.url }}" width="400" height="300"/>
@@ -13,7 +12,7 @@
                     <img src="/media/products/no_image.webp" width="400" height="300"/>
                 {% endif %}
             </div>
-            <div class="col-8">
+            <div class="col-4">
             <div class="text">
                 <p>Title - {{ products1 }}</p>
                 <p>Price - {{ products1.price }}</p>
