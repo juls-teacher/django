@@ -1,11 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block title %}Comments{% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1> Notes </h1>
+  <h1> Comments</h1>
   <div class="row mb-3">
   {% for note in notes %}
     {% if forloop.counter0|divisibleby:4 %}

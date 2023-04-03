@@ -14,7 +14,6 @@ def add_notes(request):
         if form.is_valid():
             Note.objects.create(title=form.cleaned_data["title"],
                                 comment=form.cleaned_data["comment"],)
-
             return redirect("/notes/")
     else:
         form = AddNoteForm()
