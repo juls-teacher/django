@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from api.users.serializers import RegisterSerializer,LoginSerializer
 
 
+
 class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
 
@@ -35,3 +36,14 @@ class LoginView(CreateAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         token = Token.objects.get_or_create(user=user)[0].key
         return Response(status=status.HTTP_200_OK, data={"token": token})
+
+#
+# class LogoutView(DestroyAPIView):
+#     serializer_class = LoginSerializer
+#     permission_classes = [Token]
+#
+#     def delete(self,request, *args, **kwargs):
+#         Token.objects.filter(user = request.user).delete()
+#         return Response()
+
+

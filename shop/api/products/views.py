@@ -18,3 +18,5 @@ class ProductViewSet(viewsets.ModelViewSet):
     ).order_by("-created_at")
     serializer_class = ProductModelSerializer
     permission_classes = []
+
+
