@@ -175,5 +175,17 @@ LOGGING = {
        }
    }
 }
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "PAGE_SIZE": 10,
+}
+
 MY_CUSTOM_VARIABLE = "hello world"
 MY_ENV_VARIABLE = os.getenv("MY_ENV_VARIABLE", None)
