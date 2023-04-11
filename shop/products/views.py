@@ -8,15 +8,12 @@ from django.utils import timezone
 from django.shortcuts import render, redirect
 from products.forms import AddProductForm
 from products.models import Product
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
 
 def index(request):
-    # if request.GET.get("param"):
-    #     logger.info(f' My custom var= {settings.MY_CUSTOM_VARIABLE}')
-    #     logger.info(f' My env var= {settings.MY_ENV_VARIABLE}')
-    #     logger.info(f' My param = {request.GET.get("param")}')
 
     # if int(os.getenv(key='FIRST_PARAM')) :
     #     logger.info(f'second variable  {os.getenv(key="SECOND_PARAM")}')
@@ -24,16 +21,25 @@ def index(request):
     #     logger.info(f'third variable {os.getenv(key="THIRD_PARAM")}')
     # return HttpResponse("Shop index view")
 
+    title = request.GET.get("title")
+    purchases__count = request.GET.get("purchases__count")
+
+    result = cache.get(f"products-view-{title}-{purchases__count}")
+    if result is not None:
+        return result
+
     products1 = Product.objects.all()
-    if request.GET.get("title"):
-        products1 = products1.get(title=request.GET.get("title"))
-        consumers = products1.purchases.all().distinct("user_id")
-        return render(request, 'product_info.html', {"products1": products1, "consumers": consumers})
-    # if title is not None:
-    #     products1 = products1.filter(title__icontains = title)
-    # purchases__count= request.GET.get("purchases__count")
-    # if purchases__count is not None:
-    #     products1 = products1.filter(purchases__count=purchases__count)
+    # if request.GET.get("title"):
+    #     products1 = products1.get(title=request.GET.get("title"))
+    #     consumers = products1.purchases.all().distinct("user_id")
+    #     return render(request, 'product_info.html', {"products1": products1, "consumers": consumers})
+
+    if title is not None:
+        products1 = products1.filter(title__icontains = title)
+
+    if purchases__count is not None:
+        products1 = products1.filter(purchases__count=purchases__count)
+
     # string = "<br>".join([str(p) for p in products1])
     # return HttpResponse(string)
 
@@ -51,7 +57,9 @@ def index(request):
         string = '<br>'.join([f'Product - {data.title}. Earned - {data.purchased_money}' for data in products1])
         return HttpResponse(f'Products sorted by earned money <br> {string}')
 
-    return render(request, 'index.html', {"products1": products1})
+    response = render(request, 'index.html', {"products1": products1})
+    cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
+    return response
 
 def products(request):
     if request.GET.get("product"):

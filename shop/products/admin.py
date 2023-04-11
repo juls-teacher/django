@@ -13,6 +13,9 @@ class ProductAdmin(admin.ModelAdmin):
    search_fields = ("title", "price")
    inlines = (PurchaseAdminInline,)
 
+   def save_form(self, request, form, change):
+       return super().save_form(request, form, change)
+
 
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
