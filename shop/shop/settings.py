@@ -70,7 +70,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR /'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
    "default": {
-       "ENGINE": "django.db.backends.postgresql",
-       "NAME": "django",
-       "USER": "django",
+       "ENGINE": 'django.db.backends.postgresql',
+       "NAME": 'django',
+       "USER": 'django',
        "PASSWORD": os.getenv("POSTGRES_PASSWORD","django"),
-       "HOST": "localhost",
+       "HOST": 'os.getenv("POSTGRES_HOST", "localhost")',
        "PORT": 5432,
    }
 }
@@ -184,6 +184,21 @@ LOGGING = {
        }
    }
 }
+
+
+# https://www.django-rest-framework.org/tutorial/quickstart/
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+
+    "PAGE_SIZE": 10,
+}
+
 
 MY_CUSTOM_VARIABLE = "hello world"
 MY_ENV_VARIABLE = os.getenv("MY_ENV_VARIABLE", None)
