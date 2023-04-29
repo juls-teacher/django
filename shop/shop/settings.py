@@ -26,7 +26,7 @@ SECRET_KEY = 'my-secret-key'
 #SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
-DEBUG = bool(os.getenv(key='DEBUG'))
+DEBUG = bool(os.getenv('DEBUG', True))
 
 
 ALLOWED_HOSTS = ["*"]
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_rq',
     'profiles',
     'products',
     "notes",
@@ -91,22 +92,38 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 DATABASES = {
    "default": {
        "ENGINE": 'django.db.backends.postgresql',
-       "NAME": 'django',
-       "USER": 'django',
+       "NAME": os.getenv("POSTGRES_NAME","django"),
+       "USER": os.getenv("POSTGRES_USER","django"),
        "PASSWORD": os.getenv("POSTGRES_PASSWORD","django"),
-       "HOST": 'os.getenv("POSTGRES_HOST", "localhost")',
+       "HOST": os.getenv("POSTGRES_HOST", "localhost"),
        "PORT": 5432,
    }
 }
 
 # https://docs.djangoproject.com/en/4.1/ref/settings/#caches
 
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": f"redis://{REDIS_HOST}:6379",
    }
 }
+
+# https://github.com/rq/django-rq
+
+RQ_QUEUES = {
+    'default': {
+       'HOST': REDIS_HOST,
+       'PORT': 6379,
+       'DB': 0,
+       'DEFAULT_TIMEOUT': 360,
+    },
+}
+
+
 
 
 # Password validation
@@ -199,6 +216,5 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-
-MY_CUSTOM_VARIABLE = "hello world"
-MY_ENV_VARIABLE = os.getenv("MY_ENV_VARIABLE", None)
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379")

@@ -21,12 +21,12 @@ def index(request):
     #     logger.info(f'third variable {os.getenv(key="THIRD_PARAM")}')
     # return HttpResponse("Shop index view")
 
-    title = request.GET.get("title")
-    purchases__count = request.GET.get("purchases__count")
-
-    result = cache.get(f"products-view-{title}-{purchases__count}")
-    if result is not None:
-        return result
+    # title = request.GET.get("title")
+    # purchases__count = request.GET.get("purchases__count")
+    #
+    # result = cache.get(f"products-view-{title}-{purchases__count}")
+    # if result is not None:
+    #     return result
 
     products1 = Product.objects.all()
     # if request.GET.get("title"):
@@ -34,14 +34,14 @@ def index(request):
     #     consumers = products1.purchases.all().distinct("user_id")
     #     return render(request, 'product_info.html', {"products1": products1, "consumers": consumers})
 
-    if title is not None:
-        products1 = products1.filter(title__icontains = title)
-
-    if purchases__count is not None:
-        products1 = products1.filter(purchases__count=purchases__count)
-
-    # string = "<br>".join([str(p) for p in products1])
-    # return HttpResponse(string)
+    # if title is not None:
+    #     products1 = products1.filter(title__icontains = title)
+    #
+    # if purchases__count is not None:
+    #     products1 = products1.filter(purchases__count=purchases__count)
+    #
+    # # string = "<br>".join([str(p) for p in products1])
+    # # return HttpResponse(string)
 
 
     if request.GET.get("sort") == 'price':
@@ -57,8 +57,9 @@ def index(request):
         string = '<br>'.join([f'Product - {data.title}. Earned - {data.purchased_money}' for data in products1])
         return HttpResponse(f'Products sorted by earned money <br> {string}')
 
-    response = render(request, 'index.html', {"products1": products1})
-    cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
+    products = Product.objects.all()
+    response = render(request, 'index.html', {"products": products})
+    #cache.set(f"products-view-{title}-{purchases__count}", response, 60 * 60)
     return response
 
 def products(request):

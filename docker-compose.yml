@@ -8,6 +8,10 @@ services:
      - POSTGRES_USER=django
      - POSTGRES_PASSWORD=django
 
+ redis:
+   image: redis:latest
+
+   
  django:
    image: ubuntuulia/django:latest
    ports:
@@ -16,8 +20,29 @@ services:
      - ./:/app/
    depends_on:
      - postgres
+     - redis
    environment:
-     - POSTGRES_HOST=postgres
+     - POSTGRES_NAME=django
+     - POSTGRES_USER=django
      - POSTGRES_PASS=django
+     - POSTGRES_HOST=postgres
+     - REDIS_HOST=redis
    command: |
-     python manage.py runserver 0.0.0.0:8000
+     python shop/manage.py runserver 0.0.0.0:8000
+
+ worker:
+    image: ubuntuulia/django:latest
+    volumes:
+      - ./:/app/
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - POSTGRES_NAME=django
+      - POSTGRES_USER=django
+      - POSTGRES_PASS=django
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+    command: |
+     python shop/manage.py rqworker
+      

@@ -21,14 +21,9 @@ class OmaSpider(scrapy.Spider):
             }
             yield data
 
-        # next_page = response.css(".page-nav_box .btn__page-nav:last-child::attr(href)").get()
-        # if next_page is not None:
-        #     self.current_page += 1
-        #     if self.current_page == 2:
-        #         return
-        #     yield response.follow(next_page, callback=self.parse)
-
-
-        next_page = response.css(".page-nav_box .btn__nav-right::attr(href)").get()
+        next_page = response.css(".page-nav_box .btn__page-nav:last-child::attr(href)").get()
         if next_page is not None:
+            self.current_page += 1
+            if self.current_page == 2:
+                return
             yield response.follow(next_page, callback=self.parse)
