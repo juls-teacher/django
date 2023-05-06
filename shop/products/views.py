@@ -41,7 +41,7 @@ def index(request):
     #     products1 = products1.filter(purchases__count=purchases__count)
     #
     # # string = "<br>".join([str(p) for p in products1])
-    # # return HttpResponse(string)
+    # # return HttpResponse(string)0
 
 
     if request.GET.get("sort") == 'price':

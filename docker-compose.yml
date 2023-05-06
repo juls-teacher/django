@@ -12,7 +12,7 @@ services:
    image: redis:latest
 
    
- django:
+ django: &django
    image: ubuntuulia/django:latest
    ports:
      - "8000:8000"
@@ -31,18 +31,8 @@ services:
      python shop/manage.py runserver 0.0.0.0:8000
 
  worker:
-    image: ubuntuulia/django:latest
-    volumes:
-      - ./:/app/
-    depends_on:
-      - postgres
-      - redis
-    environment:
-      - POSTGRES_NAME=django
-      - POSTGRES_USER=django
-      - POSTGRES_PASS=django
-      - POSTGRES_HOST=postgres
-      - REDIS_HOST=redis
-    command: |
+   <<: *django
+   ports: [ ]
+   command: |
      python shop/manage.py rqworker
       
