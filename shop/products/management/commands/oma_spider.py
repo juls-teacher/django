@@ -36,5 +36,4 @@ class Command(BaseCommand):
     help = "Crawl OMA catalog"
 
     def handle(self, *args, **options):
-        run_spider.delay()
-
+        run_spider()
