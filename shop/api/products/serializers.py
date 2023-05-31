@@ -1,7 +1,5 @@
 from rest_framework import serializers
-
 from products.models import Product
-
 
 class ProductModelSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -11,7 +9,6 @@ class ProductModelSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_has_image(self, obj: Product) -> bool:
         return bool(obj.image)
-
 
     class Meta:
         model = Product
