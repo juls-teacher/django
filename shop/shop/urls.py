@@ -16,26 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from products.views import index, products,add_product
-from profiles.views import profiles, register,login_view,logout_view
+from products.views import index, products, add_product
+from profiles.views import profiles, register, login_view, logout_view
 from notes.views import notes, add_notes
 
 urlpatterns = [
-   path('admin/', admin.site.urls),
-   path("api/", include("api.url", namespace="api")),
-   path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
-   path('profiles/', profiles, name='profiles'),
-   path('products/', products, name='products'),
-   path('', index, name='index'),
-   path('register/',register, name='register'),
-   path('add_product/',add_product, name='add_product'),
-   path('login/',login_view, name='login'),
-   path('logout/',logout_view, name='logout'),
-   path('notes/',notes, name='notes'),
-   path('add_notes/',add_notes, name='add_notes'),
-
-
-
+    path("admin/", admin.site.urls),
+    path("api/", include("api.url", namespace="api")),
+    path("api/auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("profiles/", profiles, name="profiles"),
+    path("products/", products, name="products"),
+    path("", index, name="index"),
+    path("register/", register, name="register"),
+    path("add_product/", add_product, name="add_product"),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("notes/", notes, name="notes"),
+    path("add_notes/", add_notes, name="add_notes"),
 ]
 
 if settings.DEBUG:

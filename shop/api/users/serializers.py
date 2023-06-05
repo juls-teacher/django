@@ -8,5 +8,3 @@ class RegisterSerializer(serializers.Serializer):
 
 class LoginSerializer(RegisterSerializer):
     ...
-
-

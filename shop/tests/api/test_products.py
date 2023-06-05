@@ -15,11 +15,14 @@ class TestProductsApi:
         assert response.status_code == 200
         assert response.json().get("count") == 0
 
-        response = self.client.post("/api/products/", data={
-            "title": "TV",
-            "color": "BLACK",
-            "price": 1000,
-        })
+        response = self.client.post(
+            "/api/products/",
+            data={
+                "title": "TV",
+                "color": "BLACK",
+                "price": 1000,
+            },
+        )
         assert response.status_code == 201
         assert Product.objects.exists()
 

@@ -10,4 +10,3 @@ class TestIndex:
     def test_my_function(self):
         response = self.client.get("/")
         assert response.status_code == 200
-

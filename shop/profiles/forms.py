@@ -1,5 +1,5 @@
 from django import forms
-from profiles.models import Profile
+# from profiles.models import Profile
 
 
 class RegisterForm(forms.Form):
@@ -13,8 +13,3 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(min_length=8, widget=forms.PasswordInput())
-
-
-
-
-
