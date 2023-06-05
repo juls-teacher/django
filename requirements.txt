@@ -14,3 +14,4 @@ django-rq==2.7.0
 factory-boy>=3.2.1
 pytest-factoryboy>=2.5.0
 faker>=13.15.0
+rq==1.13.0
