@@ -41,4 +41,4 @@ class TestProductsApi:
         response = self.client.get("/api/products/popular/")
 
         assert response.status_code == 200
-        assert response.json().get(
+        assert response.json().get()
