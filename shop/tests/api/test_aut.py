@@ -23,9 +23,9 @@ class TestProductsApi:
         assert response.json().get("token") is not None
         assert Token.objects.exists()
 
-        # self.client.credentials(
-        #     HTTP_AUTHORIZATION=f"Token {response.json().get('token')}"
-        # )
-        # response = self.client.delete("/api/logout/")
-        # assert response.status_code == 200
-        # assert not Token.objects.exists()
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Token {response.json().get('token')}"
+        )
+        response = self.client.delete("/api/logout/")
+        assert response.status_code == 200
+        assert not Token.objects.exists()
