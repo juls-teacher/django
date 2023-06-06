@@ -1,7 +1,7 @@
 import pytest
 from products.models import Product
 from rest_framework.test import APIClient
-from tests.factories import ProductFactory
+# from tests.factories import ProductFactory
 
 
 @pytest.mark.django_db
