@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from products.views import index, products, add_product
+from products.views import index, products, add_product, details
 from profiles.views import profiles, register, login_view, logout_view
 from notes.views import notes, add_notes
 
@@ -33,6 +33,9 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("notes/", notes, name="notes"),
     path("add_notes/", add_notes, name="add_notes"),
+    path("details/<int:product_id>/", details, name="details"),
+    # path("cart/", cart, name="cart"),
+
 ]
 
 if settings.DEBUG:

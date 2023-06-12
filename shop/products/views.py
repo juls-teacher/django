@@ -5,9 +5,10 @@ from django.http import HttpResponse
 # from django.conf import settings
 # from datetime import timedelta
 # from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from products.forms import AddProductForm
-from products.models import Product
+from products.models import Product, Purchase
+
 # from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
@@ -101,3 +102,17 @@ def add_product(request):
     else:
         form = AddProductForm()
     return render(request, "add_product.html", {"form": form})
+
+def details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        Purchase.objects.create(
+            user=request.user, product=product, count=request.POST.get("count")
+        )
+        return redirect("cart")
+    return render(request, "details.html", {"product": product})
+
+
+def cart(request):
+    purchases = Purchase.objects.filter(user=request.user, status="IN_CART")
+    return render(request, "purchases.html", {"purchases": purchases})

@@ -26,6 +26,12 @@ class Product(models.Model):
     def __str__(self):
         return f"Product : {self.title} - {self.price}"
 
+STATUS_CHOICES = (
+    ("IN_CART", "В корзине"),
+    ("PAID", "Оплачено"),
+    ("DELIVERED", "Отправлено"),
+)
+
 
 class Purchase(models.Model):
     user = models.ForeignKey(
@@ -34,5 +40,9 @@ class Purchase(models.Model):
     product = models.ForeignKey(
         "products.Product", on_delete=models.CASCADE, related_name="purchases"
     )
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default="IN_CART")
     count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    def __str__(self):
+        return f"Purchase: {self.user} - {self.product} - {self.count}"
